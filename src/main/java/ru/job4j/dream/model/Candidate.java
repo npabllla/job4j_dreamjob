@@ -1,16 +1,22 @@
 package ru.job4j.dream.model;
 
-public class Candidate {
-    private String name;
-    private int age;
-    private String email;
-    private String position;
+import java.util.Objects;
 
-    public Candidate(String name, int age, String position, String email) {
+public class Candidate {
+    private int id;
+    private String name;
+
+    public Candidate(int id, String name) {
+        this.id = id;
         this.name = name;
-        this.age = age;
-        this.email = email;
-        this.position = position;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -21,27 +27,20 @@ public class Candidate {
         this.name = name;
     }
 
-    public int getAge() {
-        return age;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Candidate candidate = (Candidate) o;
+        return id == candidate.id && Objects.equals(name, candidate.name);
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
     }
 }
