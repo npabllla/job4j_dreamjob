@@ -1,4 +1,4 @@
-package ru.job4j.dto;
+package ru.job4j.dream.model;
 
 public class Hr {
     private String name;
