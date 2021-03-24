@@ -2,24 +2,37 @@ package ru.job4j.dream.model;
 
 import java.util.Objects;
 
-public class User {
+public class User implements Model {
     private int id;
     private String name;
     private String email;
     private String password;
 
+    public User() {
+
+    }
+
+    public User(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    @Override
     public int getId() {
         return id;
     }
 
+    @Override
     public void setId(int id) {
         this.id = id;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }

@@ -4,6 +4,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Model;
 import ru.job4j.dream.model.Post;
+import ru.job4j.dream.model.User;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -82,6 +83,23 @@ public class PsqlStore implements Store {
     }
 
     @Override
+    public Collection<User> findAllUsers() {
+        List<User> users = new ArrayList<>();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM "user"")
+        ) {
+            try (ResultSet it = ps.executeQuery()) {
+                while (it.next()) {
+                    users.add(new User(it.getInt("id"), it.getString("name")));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    @Override
     public void save(Post post) {
         if (post.getId() == 0) {
             create(post, "post");
@@ -100,6 +118,15 @@ public class PsqlStore implements Store {
     }
 
     @Override
+    public void save(User user) {
+        if (user.getId() == 0) {
+            create(user, "user");
+        } else {
+            update(user, "user");
+        }
+    }
+
+    @Override
     public Post findPostById(int id) {
         return (Post) findById(id, "post");
     }
@@ -107,6 +134,11 @@ public class PsqlStore implements Store {
     @Override
     public Candidate findCandidateById(int id) {
         return (Candidate) findById(id, "candidate");
+    }
+
+    @Override
+    public User findUserById(int id) {
+        return (User) findById(id, "user");
     }
 
     private Model findById(int id, String tableName) {
