@@ -2,7 +2,7 @@ package ru.job4j.dream.model;
 
 import java.util.Objects;
 
-public class Candidate {
+public class Candidate implements Model {
     private int id;
     private String name;
 
@@ -11,18 +11,22 @@ public class Candidate {
         this.name = name;
     }
 
+    @Override
     public int getId() {
         return id;
     }
 
+    @Override
     public void setId(int id) {
         this.id = id;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }
@@ -42,5 +46,13 @@ public class Candidate {
     @Override
     public int hashCode() {
         return Objects.hash(id, name);
+    }
+
+    @Override
+    public String toString() {
+        return "Candidate{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + '}';
     }
 }

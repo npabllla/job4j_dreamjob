@@ -3,7 +3,7 @@ package ru.job4j.dream.model;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Post {
+public class Post implements Model {
     private int id;
     private String name;
     private String description;
@@ -14,18 +14,22 @@ public class Post {
         this.name = name;
     }
 
+    @Override
     public int getId() {
         return id;
     }
 
+    @Override
     public void setId(int id) {
         this.id = id;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }
@@ -61,5 +65,13 @@ public class Post {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, description, created);
+    }
+
+    @Override
+    public String toString() {
+        return "Post{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + '}';
     }
 }
