@@ -11,7 +11,7 @@ public interface Store {
 
     Collection<Candidate> findAllCandidates();
 
-    Collection<User> findAllUsers();
+    User findByEmail(String email);
 
     void save(Post post);
 
@@ -22,6 +22,4 @@ public interface Store {
     Post findPostById(int id);
 
     Candidate findCandidateById(int id);
-
-    User findUserById(int id);
 }
