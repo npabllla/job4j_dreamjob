@@ -1,3 +1,4 @@
+<%@ page import="ru.job4j.dream.model.User" %>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!doctype html>
@@ -22,7 +23,19 @@
 </head>
 <body>
 <div class="container pt-3">
-
+    <div class="row">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp">
+                    <% User user = (User) session.getAttribute("user"); %>
+                    <% if (user == null) { %>
+                    Неизсветный пользователь | Войти
+                    <% } else { %>
+                    <c:out value="Текущий пользователь: ${user.name}"/> | Выйти</a>
+                <%} %>
+            </li>
+        </ul>
+    </div>
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">

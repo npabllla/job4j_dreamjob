@@ -1,3 +1,4 @@
+<%@ page import="ru.job4j.dream.model.User" %>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 <%@ page pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,6 +14,19 @@
 <body>
 
 <div class="container">
+    <div class="row">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp">
+                    <% User user = (User) session.getAttribute("user"); %>
+                    <% if (user == null) { %>
+                    Неизсветный пользователь | Войти
+                    <% } else { %>
+                    <c:out value="Текущий пользователь: ${user.name}"/> | Выйти</a>
+                <%} %>
+            </li>
+        </ul>
+    </div>
     <h2>Загрузка фотографии</h2>
     <form action="<c:url value='/upload?id=${param.id}'/>" method="post" enctype="multipart/form-data">
         <div class="checkbox">

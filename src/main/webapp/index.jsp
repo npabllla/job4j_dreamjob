@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ page import="ru.job4j.dream.model.User" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!doctype html>
 <html lang="en">
@@ -35,8 +37,15 @@
                 <a class="nav-link" href="<%=request.getContextPath()%>/candidate/edit.jsp">Добавить кандидата</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp">Войти</a>
+                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp">
+                    <% User user = (User) session.getAttribute("user"); %>
+                    <% if (user == null) { %>
+                    Неизсветный пользователь | Войти
+                    <% } else { %>
+                    <c:out value="Текущий пользователь: ${user.name}"/> | Выйти</a>
+                <%} %>
             </li>
+
         </ul>
     </div>
     <div class="row">
