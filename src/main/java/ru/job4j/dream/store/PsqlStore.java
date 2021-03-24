@@ -152,17 +152,13 @@ public class PsqlStore implements Store {
     }
 
     private void update(Model model, String tableName) {
-        String sql = String.format("update %s set id = ?, name =?", tableName);
+        String sql = String.format("update %s set name =? where id=?", tableName);
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, model.getName());
-            ps.execute();
-            try (ResultSet id = ps.getGeneratedKeys()) {
-                if (id.next()) {
-                    model.setId(id.getInt(1));
-                }
-            }
+            ps.setInt(2, model.getId());
+            ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }
