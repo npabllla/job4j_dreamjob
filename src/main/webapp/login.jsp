@@ -39,6 +39,11 @@
                         <label>Пароль</label>
                         <input type="text" class="form-control" name="password">
                     </div>
+                    <c:if test="${not empty error}">
+                            <div style="color:red; font-weight: bold; margin: 30px 0;">
+                                <c:out value="${error}"/>
+                            </div>
+                    </c:if>
                     <button type="submit" class="btn btn-primary">Войти</button>
                 </form>
             </div>
