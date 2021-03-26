@@ -6,6 +6,9 @@ import ru.job4j.dream.model.Model;
 import ru.job4j.dream.model.Post;
 import ru.job4j.dream.model.User;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.sql.Connection;
@@ -14,6 +17,8 @@ import java.sql.ResultSet;
 import java.util.*;
 
 public class PsqlStore implements Store {
+
+    private static final Logger LOG = LoggerFactory.getLogger(PsqlStore.class.getName());
 
     private final BasicDataSource pool = new BasicDataSource();
 
@@ -60,7 +65,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception", e);
         }
         return posts;
     }
@@ -77,7 +82,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception", e);
         }
         return candidates;
     }
@@ -97,7 +102,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception", e);
         }
         return user;
     }
@@ -137,7 +142,7 @@ public class PsqlStore implements Store {
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                LOG.error("Exception", e);
             }
         } else {
             try (Connection cn = pool.getConnection();
@@ -149,7 +154,7 @@ public class PsqlStore implements Store {
                 ps.setString(3, user.getEmail());
                 ps.executeUpdate();
             } catch (Exception e) {
-                e.printStackTrace();
+                LOG.error("Exception", e);
             }
         }
     }
@@ -166,24 +171,28 @@ public class PsqlStore implements Store {
 
     private Model findById(int id, String tableName) {
         Model model = null;
-        String sql = String.format("SELECT * FROM %s", tableName);
+        String sql = String.format("SELECT * FROM %s WHERE id=%d", tableName, id);
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement(sql)
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
-                    if (it.getInt("id") == id && tableName.equals("candidate")) {
+                    if (tableName.equals("candidate")) {
                         model = new Candidate(it.getInt("id"), it.getString("name"));
-                    } else if (it.getInt("id") == id && tableName.equals("post")) {
+                    } else if (tableName.equals("post")) {
                         model = new Post(it.getInt("id"), it.getString("name"));
                     }
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception", e);
         }
         if (model == null) {
-            throw new NoSuchElementException();
+            try {
+                throw new NoSuchElementException();
+            } catch (NoSuchElementException e) {
+                LOG.error("No such element", e);
+            }
         }
         return model;
     }
@@ -201,7 +210,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception", e);
         }
         return model;
     }
@@ -215,7 +224,7 @@ public class PsqlStore implements Store {
             ps.setInt(2, model.getId());
             ps.executeUpdate();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception", e);
         }
     }
 }
