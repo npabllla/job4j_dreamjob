@@ -21,14 +21,16 @@ public class RegServlet extends HttpServlet {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         User user = PsqlStore.instOf().findByEmail(email);
-        if (user == null) {
+        if (user != null) {
+            req.setAttribute("error", "Такой пользователь уже сущетствует");
+            req.getRequestDispatcher("reg.jsp").forward(req, resp);
+        } else {
             User ur = new User();
             ur.setName(name);
             ur.setEmail(email);
             ur.setPassword(password);
             PsqlStore.instOf().save(ur);
             resp.sendRedirect(req.getContextPath());
-            return;
         }
         resp.sendRedirect(req.getContextPath() + "/reg.do");
     }
