@@ -88,17 +88,17 @@ public class PsqlStore implements Store {
     }
 
     @Override
-    public User findByEmail(String email) {
-        User user = null;
+    public Optional<User> findByEmail(String email) {
+        Optional<User> user = Optional.empty();
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement("select * from users where email=?")
         ) {
             ps.setString(1, email);
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
-                    user = new User(it.getInt("id"), it.getString("name"));
-                    user.setEmail(it.getString("email"));
-                    user.setPassword(it.getString("password"));
+                    user = Optional.of(new User(it.getInt("id"), it.getString("name")));
+                    user.get().setEmail(it.getString("email"));
+                    user.get().setPassword(it.getString("password"));
                 }
             }
         } catch (Exception e) {
@@ -160,39 +160,32 @@ public class PsqlStore implements Store {
     }
 
     @Override
-    public Post findPostById(int id) {
-        return (Post) findById(id, "post");
+    public Optional<Post> findPostById(int id) {
+        return (Optional<Post>) findById(id, "post");
     }
 
     @Override
-    public Candidate findCandidateById(int id) {
-        return (Candidate) findById(id, "candidate");
+    public Optional<Candidate> findCandidateById(int id) {
+        return (Optional<Candidate>) findById(id, "candidate");
     }
 
-    private Model findById(int id, String tableName) {
-        Model model = null;
+    private Optional<? extends Model> findById(int id, String tableName) {
+        Optional<Model> model = Optional.empty();
         String sql = String.format("SELECT * FROM %s WHERE id=%d", tableName, id);
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement(sql)
         ) {
             try (ResultSet it = ps.executeQuery()) {
-                while (it.next()) {
+                if (it.next()) {
                     if (tableName.equals("candidate")) {
-                        model = new Candidate(it.getInt("id"), it.getString("name"));
+                        model = Optional.of(new Candidate(it.getInt("id"), it.getString("name")));
                     } else if (tableName.equals("post")) {
-                        model = new Post(it.getInt("id"), it.getString("name"));
+                        model = Optional.of(new Post(it.getInt("id"), it.getString("name")));
                     }
                 }
             }
         } catch (Exception e) {
             LOG.error("Exception", e);
-        }
-        if (model == null) {
-            try {
-                throw new NoSuchElementException();
-            } catch (NoSuchElementException e) {
-                LOG.error("No such element", e);
-            }
         }
         return model;
     }

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Optional;
 
 public class AuthServlet extends HttpServlet {
     @Override
@@ -21,8 +22,8 @@ public class AuthServlet extends HttpServlet {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         HttpSession sc = req.getSession();
-        User user = PsqlStore.instOf().findByEmail(email);
-        if (user == null || !user.getPassword().equals(password)) {
+        Optional<User> user = PsqlStore.instOf().findByEmail(email);
+        if (user.isEmpty() || !user.get().getPassword().equals(password)) {
             req.setAttribute("error", "Не верный email или пароль");
             req.getRequestDispatcher("login.jsp").forward(req, resp);
         } else {

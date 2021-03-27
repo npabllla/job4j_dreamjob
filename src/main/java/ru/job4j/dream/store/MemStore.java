@@ -6,6 +6,7 @@ import ru.job4j.dream.model.User;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -40,8 +41,8 @@ public class MemStore implements Store {
     }
 
     @Override
-    public User findByEmail(String email) {
-        return null;
+    public Optional<User> findByEmail(String email) {
+        return Optional.empty();
     }
 
     public void save(Post post) {
@@ -51,8 +52,8 @@ public class MemStore implements Store {
         posts.put(post.getId(), post);
     }
 
-    public Post findPostById(int id) {
-        return posts.get(id);
+    public Optional<Post> findPostById(int id) {
+        return Optional.of(posts.get(id));
     }
 
     public void save(Candidate candidate) {
@@ -70,8 +71,8 @@ public class MemStore implements Store {
         users.put(user.getId(), user);
     }
 
-    public Candidate findCandidateById(int id) {
-        return candidates.get(id);
+    public Optional<Candidate> findCandidateById(int id) {
+        return Optional.of(candidates.get(id));
     }
 }
 
