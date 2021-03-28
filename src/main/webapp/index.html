@@ -7,27 +7,38 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        function validate() {
+            let elements =[$('#name'), $('#surname'), $('#gender'), $('#description')]
+            for (let i = 0; i < elements.length; i++) {
+                if (elements[i].val() === "") {
+                    alert(elements[i].attr('title'));
+                }
+            }
+            return false;
+        }
+    </script>
 </head>
 <body>
 <div class="container">
     <form>
         <div class="form-group">
             <label for="name">Имя:</label>
-            <input class="form-control" id="name">
+            <input class="form-control" id="name" title="Введите ваше имя">
         </div>
         <div class="form-group">
             <label for="surname">Фамилия:</label>
-            <input class="form-control" id="surname">
+            <input class="form-control" id="surname" title="Введите вашу фамилию">
         </div>
         <div class="form-group">
             <label for="gender">Пол:</label>
-            <input class="form-control" id="gender">
+            <input class="form-control" id="gender" title="Введите ваш пол">
         </div>
         <div class="form-group">
             <label for="description">Описание:</label>
-            <input class="form-control" id="description">
+            <input class="form-control" id="description" title="Введите ваше описание">
         </div>
-        <button type="submit" class="btn btn-default">Зарегистрироваться</button>
+        <button type="button" class="btn btn-default" onclick="return validate();">Зарегистрироваться</button>
     </form>
     <div class="table-responsive">
         <h2>Объявления</h2>
