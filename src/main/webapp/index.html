@@ -18,6 +18,17 @@
             return false;
         }
     </script>
+    <script>
+        function addRow() {
+            let elements =[$('#name'), $('#surname'), $('#gender'), $('#description')]
+            $('#table tr:last').after('<tr>' +
+                '<td>' + elements[0].val() +'</td>' +
+                '<td>' + elements[1].val() +'</td>' +
+                '<td>' + elements[2].val() +'</td>' +
+                '<td>' + elements[3].val() +'</td>' +
+                '</tr>');
+        }
+    </script>
 </head>
 <body>
 <div class="container">
@@ -42,7 +53,7 @@
     </form>
     <div class="table-responsive">
         <h2>Объявления</h2>
-        <table class="table">
+        <table class="table" id="table">
             <thead>
             <tr>
                 <th>Имя</th>
@@ -55,6 +66,7 @@
             </tbody>
         </table>
     </div>
+    <button type="button" class="btn btn-default" onclick="addRow();">Добавить пользователя</button>
 </div>
 </body>
 </html>
