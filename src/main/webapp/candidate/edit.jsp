@@ -3,7 +3,6 @@
 <%@ page import="ru.job4j.dream.model.Candidate" %>
 <%@ page import="ru.job4j.dream.store.PsqlStore" %>
 <%@ page import="ru.job4j.dream.model.User" %>
-<%@ page import="java.util.Objects" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -20,13 +19,47 @@
             integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
     <title>Работа мечты</title>
+    <style>
+        select {
+            width: 150px;
+        }
+    </style>
 </head>
 <body>
+<script>
+    $(document).ready(function () {
+        const req = $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/dreamjob/cities",
+            dataType: "json"
+        })
+        req.done(function (data) {
+            let cities = "";
+            for (let i = 0; i < data.length; i++) {
+                cities += "<option value=" + data[i]['name'] + ">" + data[i]['name'] + "</option>";
+            }
+            $('#cities').html(cities);
+        })
+    })
+    function validate() {
+        const name = $('#candidateName')
+        const city = $('#candidateCity')
+        if (name.val() === '') {
+            alert("Name is empty")
+            return false;
+        }
+        if (city.has('option').length > 0) {
+            alert("City is empty")
+            return false;
+        }
+        return true;
+    }
+</script>
 <%
     String id = request.getParameter("id");
-    Candidate candidate = new Candidate(0, "");
+    Candidate candidate = new Candidate(0, "", "");
     if (id != null) {
         candidate = PsqlStore.instOf().findCandidateById(Integer.parseInt(id));
     }
@@ -59,7 +92,14 @@
                     <div class="form-group">
                         <label>Имя</label>
                         <label>
-                            <input type="text" class="form-control" name="name" value="<%=candidate.getName()%>">
+                            <input type="text" class="form-control" name="name" value="<%=candidate.getName()%>" id="candidateName">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>Город</label>
+                        <label>
+                            <select name="city" class="form-select" aria-label=".form-select-sm" id="cities">
+                            </select>
                         </label>
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>

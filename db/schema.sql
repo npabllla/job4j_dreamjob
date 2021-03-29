@@ -14,3 +14,10 @@ CREATE TABLE users (
     email TEXT,
     password TEXT
 );
+
+CREATE TABLE cities(
+    id SERIAL PRIMARY KEY,
+    city_name TEXT
+);
+
+alter table candidate add column city_id integer references cities(id)

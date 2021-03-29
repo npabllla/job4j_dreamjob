@@ -2,33 +2,39 @@ package ru.job4j.dream.model;
 
 import java.util.Objects;
 
-public class Candidate implements Model {
+public class Candidate {
     private int id;
     private String name;
+    private String cityName;
 
-    public Candidate(int id, String name) {
+    public Candidate(int id, String name, String cityName) {
         this.id = id;
         this.name = name;
+        this.cityName = cityName;
     }
 
-    @Override
     public int getId() {
         return id;
     }
 
-    @Override
     public void setId(int id) {
         this.id = id;
     }
 
-    @Override
     public String getName() {
         return name;
     }
 
-    @Override
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 
     @Override

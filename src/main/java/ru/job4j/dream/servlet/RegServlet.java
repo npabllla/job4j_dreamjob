@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Optional;
 
 public class RegServlet extends HttpServlet {
     @Override
@@ -21,8 +20,8 @@ public class RegServlet extends HttpServlet {
         String name = req.getParameter("name");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        Optional<User> user = PsqlStore.instOf().findByEmail(email);
-        if (user.isPresent()) {
+        User user = PsqlStore.instOf().findByEmail(email);
+        if (user != null) {
             req.setAttribute("error", "Такой пользователь уже сущетствует");
             req.getRequestDispatcher("reg.jsp").forward(req, resp);
         } else {

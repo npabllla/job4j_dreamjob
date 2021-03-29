@@ -46,6 +46,7 @@
                     <thead>
                     <tr>
                         <th scope="col">Названия</th>
+                        <th scope="col">Город</th>
                         <th scope="col">Фото</th>
                     </tr>
                     </thead>
@@ -58,6 +59,7 @@
                                 </a>
                                 <c:out value="${candidate.name}"/>
                             </td>
+                            <td><c:out value="${candidate.cityName}"/></td>
                             <td>
                                 <img src="<c:url value='/download?name=${candidate.id}'/>" width="100px" height="100px" alt="No Image"/>
                                 <form action='<c:url value="/photoUpload.jsp?id=${candidate.id}"/>' method="post">
