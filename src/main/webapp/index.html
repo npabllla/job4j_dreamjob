@@ -13,20 +13,23 @@
             for (let i = 0; i < elements.length; i++) {
                 if (elements[i].val() === "") {
                     alert(elements[i].attr('title'));
+                    return false;
                 }
             }
-            return false;
+            return true;
         }
     </script>
     <script>
         function addRow() {
             let elements =[$('#name'), $('#surname'), $('#gender'), $('#description')]
-            $('#table tr:last').after('<tr>' +
-                '<td>' + elements[0].val() +'</td>' +
-                '<td>' + elements[1].val() +'</td>' +
-                '<td>' + elements[2].val() +'</td>' +
-                '<td>' + elements[3].val() +'</td>' +
-                '</tr>');
+            if (validate()) {
+                $('#table tr:last').after('<tr>' +
+                    '<td>' + elements[0].val() + '</td>' +
+                    '<td>' + elements[1].val() + '</td>' +
+                    '<td>' + elements[2].val() + '</td>' +
+                    '<td>' + elements[3].val() + '</td>' +
+                    '</tr>');
+            }
         }
     </script>
 </head>
