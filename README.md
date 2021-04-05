@@ -10,6 +10,7 @@
  * Junit, Mockito
  * Log4j, Sl4J 
  * Travis CI
+ * Maven
 ## Интрефейс приложения
 ### Основаня страница
 ![ScreenShot](images/MainPage.png)
