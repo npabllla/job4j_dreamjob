@@ -6,7 +6,6 @@
 ### Используемые технологии
  * Java servlets
  * JSP
- * JavaScript (jQuery)
  * PostgreSQL
  * Junit, Mockito
  * Log4j, Sl4J 
