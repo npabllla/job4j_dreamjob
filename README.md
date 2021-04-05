@@ -6,11 +6,13 @@
 ### Используемые технологии
  * Java servlets
  * JSP, HTML
+ * JDBC
  * PostgreSQL
  * Junit, Mockito
  * Log4j, Sl4J 
- * Travis CI
+ * Apache Tomcat
  * Maven
+ * Travis CI
 ## Интрефейс приложения
 ### Основаня страница
 ![ScreenShot](images/MainPage.png)
