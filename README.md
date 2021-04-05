@@ -10,8 +10,8 @@
  * PostgreSQL
  * Junit, Mockito
  * Log4j, Sl4J 
- * Apache Tomcat
  * Maven
+ * Apache Tomcat
  * Travis CI, CodeCov, CheckStyle
 ## Интрефейс приложения
 ### Основаня страница
