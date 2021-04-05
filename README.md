@@ -12,7 +12,7 @@
  * Log4j, Sl4J 
  * Apache Tomcat
  * Maven
- * Travis CI
+ * Travis CI, CodeCov, CheckStyle
 ## Интрефейс приложения
 ### Основаня страница
 ![ScreenShot](images/MainPage.png)
