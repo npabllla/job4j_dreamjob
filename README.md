@@ -2,7 +2,7 @@
 [![codecov](https://codecov.io/gh/npabllla/job4j_dreamjob/branch/main/graph/badge.svg?token=JJS0RFM46H)](https://codecov.io/gh/npabllla/job4j_dreamjob)
 # job4j_dreamjob
 ## Проект "работа мечты"
-
+### Веб-приложение для поиска вакансий и кандидатов
 ### Используемые технологии
  * Java servlets
  * JSP, HTML
